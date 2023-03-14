@@ -1,9 +1,9 @@
-package com.epam.learning.backendservices.rest.Controller;
+package com.epam.learning.backendservices.rest.controllerImpl;
 
-import com.epam.learning.backendservices.rest.ServiceController;
-import com.epam.learning.backendservices.rest.SubscriptionRequestDto;
-import com.epam.learning.backendservices.rest.SubscriptionResponseDto;
-import com.epam.learning.backendservices.rest.Service.SubscriptionServiceImpl;
+import com.epam.learning.backendservices.rest.controller.ServiceController;
+import com.epam.learning.backendservices.rest.dto.SubscriptionRequestDto;
+import com.epam.learning.backendservices.rest.dto.SubscriptionResponseDto;
+import com.epam.learning.backendservices.rest.serviceImpl.SubscriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;

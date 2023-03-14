@@ -1,4 +1,4 @@
-package com.epam.learning.backendservices.rest;
+package com.epam.learning.backendservices.rest.dto;
 
 public class SubscriptionRequestDto {
 

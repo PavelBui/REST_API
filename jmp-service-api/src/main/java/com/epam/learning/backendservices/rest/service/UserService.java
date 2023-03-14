@@ -1,4 +1,4 @@
-package com.epam.learning.backendservices.rest;
+package com.epam.learning.backendservices.rest.service;
 
 import com.epam.learning.backendservices.rest.model.User;
 

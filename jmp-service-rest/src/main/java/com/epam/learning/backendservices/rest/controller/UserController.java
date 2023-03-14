@@ -1,5 +1,7 @@
-package com.epam.learning.backendservices.rest;
+package com.epam.learning.backendservices.rest.controller;
 
+import com.epam.learning.backendservices.rest.dto.UserRequestDto;
+import com.epam.learning.backendservices.rest.dto.UserResponseDto;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

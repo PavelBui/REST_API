@@ -1,7 +1,7 @@
-package com.epam.learning.backendservices.rest.Service;
+package com.epam.learning.backendservices.rest.serviceImpl;
 
-import com.epam.learning.backendservices.rest.SubscriptionService;
-import com.epam.learning.backendservices.rest.dao.SubscriptionRepository;
+import com.epam.learning.backendservices.rest.service.SubscriptionService;
+import com.epam.learning.backendservices.rest.repository.SubscriptionRepository;
 import com.epam.learning.backendservices.rest.model.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,9 +17,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public Subscription createSubscription(Subscription subscription) {
-        subscription.setId(null);
-        subscription.setStartDate(LocalDate.now());
-        return subscriptionRepository.save(subscription);
+        Long id = subscription.getId();
+        return subscriptionRepository.findById(id)
+                .orElseGet(() -> {
+                    subscription.setId(null);
+                    subscription.setStartDate(LocalDate.now());
+                    return subscriptionRepository.save(subscription);
+                });
     }
 
     @Override

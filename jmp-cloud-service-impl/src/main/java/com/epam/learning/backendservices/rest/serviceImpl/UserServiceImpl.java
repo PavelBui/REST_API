@@ -1,7 +1,7 @@
-package com.epam.learning.backendservices.rest.Service;
+package com.epam.learning.backendservices.rest.serviceImpl;
 
-import com.epam.learning.backendservices.rest.UserService;
-import com.epam.learning.backendservices.rest.dao.UserRepository;
+import com.epam.learning.backendservices.rest.service.UserService;
+import com.epam.learning.backendservices.rest.repository.UserRepository;
 import com.epam.learning.backendservices.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        user.setId(null);
-        return userRepository.save(user);
+        Long id = user.getId();
+        return userRepository.findById(id)
+                .orElseGet(() -> {
+                    user.setId(null);
+                    return userRepository.save(user);
+                });
     }
 
     @Override

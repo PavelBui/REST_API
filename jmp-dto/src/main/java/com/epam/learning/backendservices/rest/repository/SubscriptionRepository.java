@@ -1,4 +1,4 @@
-package com.epam.learning.backendservices.rest.dao;
+package com.epam.learning.backendservices.rest.repository;
 
 import com.epam.learning.backendservices.rest.model.Subscription;
 import org.springframework.data.repository.CrudRepository;
