@@ -1,0 +1,53 @@
+package com.epam.learning.backendservices.rest.model;
+
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "subscriptions")
+public class Subscription {
+    @Id
+    @Column(name="subscriptionId")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name="subscriptionUser")
+    private User user;
+
+    @Column(name="subscriptionStartDate")
+    private LocalDate startDate;
+
+    public Subscription() {}
+
+    public Subscription(Long id, User user, LocalDate startDate) {
+        this.id = id;
+        this.user = user;
+        this.startDate = startDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+}
