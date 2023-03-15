@@ -1,7 +1,5 @@
 package com.epam.learning.backendservices.rest.model;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -61,5 +59,15 @@ public class User {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }

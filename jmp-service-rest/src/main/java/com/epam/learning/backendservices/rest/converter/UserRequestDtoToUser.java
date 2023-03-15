@@ -3,9 +3,11 @@ package com.epam.learning.backendservices.rest.converter;
 import com.epam.learning.backendservices.rest.dto.UserRequestDto;
 import com.epam.learning.backendservices.rest.model.User;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 public class UserRequestDtoToUser {
 
     public User convert(UserRequestDto userRequestDto) {

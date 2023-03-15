@@ -1,13 +1,20 @@
 package com.epam.learning.backendservices.rest.model;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "subscriptions")
 public class Subscription {
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", user=" + user +
+                ", startDate=" + startDate +
+                '}';
+    }
+
     @Id
     @Column(name="subscriptionId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
