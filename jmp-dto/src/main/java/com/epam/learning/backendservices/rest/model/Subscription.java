@@ -10,10 +10,11 @@ import java.time.LocalDate;
 public class Subscription {
     @Id
     @Column(name="subscriptionId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="subscriptionUser")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId", nullable = false)
     private User user;
 
     @Column(name="subscriptionStartDate")

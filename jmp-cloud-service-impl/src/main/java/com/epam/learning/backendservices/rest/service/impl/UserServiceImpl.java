@@ -1,4 +1,4 @@
-package com.epam.learning.backendservices.rest.serviceImpl;
+package com.epam.learning.backendservices.rest.service.impl;
 
 import com.epam.learning.backendservices.rest.service.UserService;
 import com.epam.learning.backendservices.rest.repository.UserRepository;
