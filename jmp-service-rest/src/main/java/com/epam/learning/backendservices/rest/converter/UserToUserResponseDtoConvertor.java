@@ -6,7 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserToUserResponseDto {
+public class UserToUserResponseDtoConvertor {
 
     public UserResponseDto convert(User user) {
         UserResponseDto userResponseDto = new UserResponseDto();

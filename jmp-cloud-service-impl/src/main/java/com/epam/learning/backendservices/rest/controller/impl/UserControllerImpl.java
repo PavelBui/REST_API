@@ -1,8 +1,8 @@
 package com.epam.learning.backendservices.rest.controller.impl;
 
 import com.epam.learning.backendservices.rest.controller.UserController;
-import com.epam.learning.backendservices.rest.converter.UserRequestDtoToUser;
-import com.epam.learning.backendservices.rest.converter.UserToUserResponseDto;
+import com.epam.learning.backendservices.rest.converter.UserRequestDtoToUserConvertor;
+import com.epam.learning.backendservices.rest.converter.UserToUserResponseDtoConvertor;
 import com.epam.learning.backendservices.rest.dto.UserRequestDto;
 import com.epam.learning.backendservices.rest.dto.UserResponseDto;
 import com.epam.learning.backendservices.rest.model.User;
@@ -24,9 +24,9 @@ public class UserControllerImpl implements UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserToUserResponseDto userToUserResponseDto;
+    private UserToUserResponseDtoConvertor userToUserResponseDto;
     @Autowired
-    private UserRequestDtoToUser userRequestDtoToUser;
+    private UserRequestDtoToUserConvertor userRequestDtoToUser;
 
     public EntityModel<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) {
         User user = userService.createUser(userRequestDtoToUser.convert(userRequestDto));
@@ -58,11 +58,11 @@ public class UserControllerImpl implements UserController {
 
     private static EntityModel<UserResponseDto> toModel(UserResponseDto response) {
         return EntityModel.of(response,
-                linkTo(methodOn(UserControllerImpl.class).getUser(response.getId())).withSelfRel(),
-                linkTo(methodOn(UserControllerImpl.class).getAllUser()).withRel("users"),
-                linkTo(methodOn(UserControllerImpl.class).deleteUser(response.getId())).withRel("delete"),
-                linkTo(methodOn(UserControllerImpl.class).createUser(new UserRequestDto())).withRel("create"),
-                linkTo(methodOn(UserControllerImpl.class).updateUser(new UserRequestDto())).withRel("update")
+                linkTo(methodOn(UserController.class).getUser(response.getId())).withSelfRel(),
+                linkTo(methodOn(UserController.class).getAllUser()).withRel("getAllUsers"),
+                linkTo(methodOn(UserController.class).deleteUser(response.getId())).withRel("deleteUser"),
+                linkTo(methodOn(UserController.class).createUser(new UserRequestDto())).withRel("createUser"),
+                linkTo(methodOn(UserController.class).updateUser(new UserRequestDto())).withRel("updateUser")
         );
     }
 }

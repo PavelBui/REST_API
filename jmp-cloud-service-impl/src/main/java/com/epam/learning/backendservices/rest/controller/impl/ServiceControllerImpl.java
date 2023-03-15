@@ -1,8 +1,8 @@
 package com.epam.learning.backendservices.rest.controller.impl;
 
 import com.epam.learning.backendservices.rest.controller.ServiceController;
-import com.epam.learning.backendservices.rest.converter.SubscriptionRequestDtoToSubscription;
-import com.epam.learning.backendservices.rest.converter.SubscriptionToSubscriptionResponseDto;
+import com.epam.learning.backendservices.rest.converter.SubscriptionRequestDtoToSubscriptionConvertor;
+import com.epam.learning.backendservices.rest.converter.SubscriptionToSubscriptionResponseDtoConvertor;
 import com.epam.learning.backendservices.rest.dto.SubscriptionRequestDto;
 import com.epam.learning.backendservices.rest.dto.SubscriptionResponseDto;
 import com.epam.learning.backendservices.rest.model.Subscription;
@@ -24,9 +24,9 @@ public class ServiceControllerImpl implements ServiceController {
     @Autowired
     private SubscriptionService subscriptionService;
     @Autowired
-    private SubscriptionToSubscriptionResponseDto subscriptionToSubscriptionResponseDto;
+    private SubscriptionToSubscriptionResponseDtoConvertor subscriptionToSubscriptionResponseDto;
     @Autowired
-    private SubscriptionRequestDtoToSubscription subscriptionRequestDtoToSubscription;
+    private SubscriptionRequestDtoToSubscriptionConvertor subscriptionRequestDtoToSubscription;
 
     public EntityModel<SubscriptionResponseDto> createSubscription(@RequestBody SubscriptionRequestDto subscriptionRequestDto) {
         Subscription subscription = subscriptionService.createSubscription(
@@ -60,11 +60,11 @@ public class ServiceControllerImpl implements ServiceController {
 
     private static EntityModel<SubscriptionResponseDto> toModel(SubscriptionResponseDto response) {
         return EntityModel.of(response,
-                linkTo(methodOn(ServiceControllerImpl.class).getSubscription(response.getId())).withSelfRel(),
-                linkTo(methodOn(ServiceControllerImpl.class).getAllSubscription()).withRel("subscriptions"),
-                linkTo(methodOn(ServiceControllerImpl.class).deleteSubscription(response.getId())).withRel("delete"),
-                linkTo(methodOn(ServiceControllerImpl.class).createSubscription(new SubscriptionRequestDto())).withRel("create"),
-                linkTo(methodOn(ServiceControllerImpl.class).updateSubscription(new SubscriptionRequestDto())).withRel("update")
+                linkTo(methodOn(ServiceController.class).getSubscription(response.getId())).withSelfRel(),
+                linkTo(methodOn(ServiceController.class).getAllSubscription()).withRel("getAllSubscriptions"),
+                linkTo(methodOn(ServiceController.class).deleteSubscription(response.getId())).withRel("deleteSubscription"),
+                linkTo(methodOn(ServiceController.class).createSubscription(new SubscriptionRequestDto())).withRel("createSubscription"),
+                linkTo(methodOn(ServiceController.class).updateSubscription(new SubscriptionRequestDto())).withRel("updateSubscription")
         );
     }
 }

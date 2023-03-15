@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-public class UserRequestDtoToUser {
+public class UserRequestDtoToUserConvertor {
 
     public User convert(UserRequestDto userRequestDto) {
         User user = new User();

@@ -6,7 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SubscriptionToSubscriptionResponseDto {
+public class SubscriptionToSubscriptionResponseDtoConvertor {
 
     public SubscriptionResponseDto convert(Subscription subscription) {
         SubscriptionResponseDto subscriptionResponseDto = new SubscriptionResponseDto();
