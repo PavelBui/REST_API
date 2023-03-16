@@ -4,11 +4,11 @@ import com.epam.learning.backendservices.rest.service.UserService;
 import com.epam.learning.backendservices.rest.repository.UserRepository;
 import com.epam.learning.backendservices.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
