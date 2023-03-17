@@ -5,6 +5,7 @@ import com.epam.learning.backendservices.rest.converter.SubscriptionRequestDtoTo
 import com.epam.learning.backendservices.rest.converter.SubscriptionToSubscriptionResponseDtoConvertor;
 import com.epam.learning.backendservices.rest.dto.SubscriptionRequestDto;
 import com.epam.learning.backendservices.rest.dto.SubscriptionResponseDto;
+import com.epam.learning.backendservices.rest.exeption.SubscriptionNotFoundException;
 import com.epam.learning.backendservices.rest.model.Subscription;
 import com.epam.learning.backendservices.rest.service.SubscriptionService;
 import io.swagger.annotations.Api;
@@ -57,7 +58,8 @@ public class ServiceControllerImpl implements ServiceController {
     @ApiImplicitParam(name = "id", value = "Subscription id", paramType = "path", required = true)
     public EntityModel<SubscriptionResponseDto> getSubscription(@PathVariable Long id) {
         return toModel(subscriptionToSubscriptionResponseDtoConvertor.convert(
-                subscriptionService.getSubscription(id)));
+                subscriptionService.getSubscription(id)
+                        .orElseThrow(() -> new SubscriptionNotFoundException((id)))));
     }
 
     @ApiOperation("Get list of all Subscriptions")

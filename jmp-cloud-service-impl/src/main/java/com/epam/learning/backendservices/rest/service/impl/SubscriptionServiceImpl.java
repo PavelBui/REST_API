@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
@@ -44,8 +45,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Subscription getSubscription(Long id) {
-        return subscriptionRepository.findById(id).get();
+    public Optional<Subscription> getSubscription(Long id) {
+        return subscriptionRepository.findById(id);
     }
 
     @Override

@@ -38,7 +38,7 @@ public class SpringConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("public-api")
+                .groupName("My-API")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.epam.learning.backendservices.rest.controller.impl"))
                 .paths(PathSelectors.any())

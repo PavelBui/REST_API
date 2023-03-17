@@ -1,6 +1,7 @@
 package com.epam.learning.backendservices.rest.converter;
 
 import com.epam.learning.backendservices.rest.dto.SubscriptionRequestDto;
+import com.epam.learning.backendservices.rest.exeption.UserNotFoundException;
 import com.epam.learning.backendservices.rest.model.Subscription;
 import com.epam.learning.backendservices.rest.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +17,8 @@ public class SubscriptionRequestDtoToSubscriptionConvertor {
     public Subscription convert(SubscriptionRequestDto subscriptionRequestDto) {
         Subscription subscription = new Subscription();
         BeanUtils.copyProperties(subscriptionRequestDto, subscription);
-        subscription.setUser(userService.getUser(subscriptionRequestDto.getUserId()));
+        subscription.setUser(userService.getUser(subscriptionRequestDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(subscriptionRequestDto.getUserId())));
         return subscription;
     }
 }

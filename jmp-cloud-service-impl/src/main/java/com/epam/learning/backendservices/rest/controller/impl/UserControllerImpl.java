@@ -5,6 +5,7 @@ import com.epam.learning.backendservices.rest.converter.UserRequestDtoToUserConv
 import com.epam.learning.backendservices.rest.converter.UserToUserResponseDtoConvertor;
 import com.epam.learning.backendservices.rest.dto.UserRequestDto;
 import com.epam.learning.backendservices.rest.dto.UserResponseDto;
+import com.epam.learning.backendservices.rest.exeption.UserNotFoundException;
 import com.epam.learning.backendservices.rest.model.User;
 import com.epam.learning.backendservices.rest.service.UserService;
 import io.swagger.annotations.Api;
@@ -54,7 +55,7 @@ public class UserControllerImpl implements UserController {
     @ApiOperation("Get User by id")
     @ApiImplicitParam(name = "id", value = "User id", paramType = "path", required = true)
     public EntityModel<UserResponseDto> getUser(@PathVariable Long id) {
-        User user = userService.getUser(id);
+        User user = userService.getUser(id).orElseThrow(() -> new UserNotFoundException(id));
         return toModel(userToUserResponseDtoConvertor.convert(user));
     }
 

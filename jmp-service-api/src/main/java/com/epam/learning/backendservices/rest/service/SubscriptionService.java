@@ -3,6 +3,7 @@ package com.epam.learning.backendservices.rest.service;
 import com.epam.learning.backendservices.rest.model.Subscription;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubscriptionService {
 
@@ -12,7 +13,7 @@ public interface SubscriptionService {
 
     void deleteSubscription(Long id);
 
-    Subscription getSubscription(Long id);
+    Optional<Subscription> getSubscription(Long id);
 
     List<Subscription> getAllSubscription();
 }
