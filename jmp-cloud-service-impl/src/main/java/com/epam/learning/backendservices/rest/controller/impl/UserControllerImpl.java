@@ -7,6 +7,9 @@ import com.epam.learning.backendservices.rest.dto.UserRequestDto;
 import com.epam.learning.backendservices.rest.dto.UserResponseDto;
 import com.epam.learning.backendservices.rest.model.User;
 import com.epam.learning.backendservices.rest.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -19,50 +22,58 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Api(tags = "User Endpoint")
 public class UserControllerImpl implements UserController {
 
     @Autowired
     private UserService userService;
     @Autowired
-    private UserToUserResponseDtoConvertor userToUserResponseDto;
+    private UserToUserResponseDtoConvertor userToUserResponseDtoConvertor;
     @Autowired
-    private UserRequestDtoToUserConvertor userRequestDtoToUser;
+    private UserRequestDtoToUserConvertor userRequestDtoToUserConvertor;
 
+    @ApiOperation("Create User")
     public EntityModel<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) {
-        User user = userService.createUser(userRequestDtoToUser.convert(userRequestDto));
-        return toModel(userToUserResponseDto.convert(user));
+        User user = userService.createUser(userRequestDtoToUserConvertor.convert(userRequestDto));
+        return toModel(userToUserResponseDtoConvertor.convert(user));
     }
 
+    @ApiOperation("Update User")
     public EntityModel<UserResponseDto> updateUser(@RequestBody UserRequestDto userRequestDto) {
-        User user = userService.updateUser(userRequestDtoToUser.convert(userRequestDto));
-        return toModel(userToUserResponseDto.convert(user));
+        User user = userService.updateUser(userRequestDtoToUserConvertor.convert(userRequestDto));
+        return toModel(userToUserResponseDtoConvertor.convert(user));
     }
 
+    @ApiOperation("Delete User by id")
+    @ApiImplicitParam(name = "id", value = "User id", paramType = "path", required = true)
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation("Get User by id")
+    @ApiImplicitParam(name = "id", value = "User id", paramType = "path", required = true)
     public EntityModel<UserResponseDto> getUser(@PathVariable Long id) {
         User user = userService.getUser(id);
-        return toModel(userToUserResponseDto.convert(user));
+        return toModel(userToUserResponseDtoConvertor.convert(user));
     }
 
+    @ApiOperation("Get list of all Users")
     public List<EntityModel<UserResponseDto>> getAllUser() {
         return userService.getAllUser()
                 .stream()
-                .map(user -> userToUserResponseDto.convert(user))
+                .map(user -> userToUserResponseDtoConvertor.convert(user))
                 .map(UserControllerImpl::toModel)
                 .collect(Collectors.toList());
     }
 
     private static EntityModel<UserResponseDto> toModel(UserResponseDto response) {
         return EntityModel.of(response,
-                linkTo(methodOn(UserController.class).getUser(response.getId())).withSelfRel(),
-                linkTo(methodOn(UserController.class).getAllUser()).withRel("getAllUsers"),
-                linkTo(methodOn(UserController.class).deleteUser(response.getId())).withRel("deleteUser"),
-                linkTo(methodOn(UserController.class).createUser(new UserRequestDto())).withRel("createUser"),
-                linkTo(methodOn(UserController.class).updateUser(new UserRequestDto())).withRel("updateUser")
+                linkTo(methodOn(UserControllerImpl.class).getUser(response.getId())).withSelfRel(),
+                linkTo(methodOn(UserControllerImpl.class).getAllUser()).withRel("getAllUsers"),
+                linkTo(methodOn(UserControllerImpl.class).deleteUser(response.getId())).withRel("deleteUser"),
+                linkTo(methodOn(UserControllerImpl.class).createUser(new UserRequestDto())).withRel("createUser"),
+                linkTo(methodOn(UserControllerImpl.class).updateUser(new UserRequestDto())).withRel("updateUser")
         );
     }
 }

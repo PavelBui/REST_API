@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.client.LinkDiscoverers;
 import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
@@ -18,14 +17,12 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableSwagger2
 public class SpringConfig {
 
     private static final Logger log = LoggerFactory.getLogger(SpringConfig.class);
@@ -43,7 +40,7 @@ public class SpringConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("public-api")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.epam.learning.backendservices.rest.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.epam.learning.backendservices.rest.controller.impl"))
                 .paths(PathSelectors.any())
                 .build();
     }
