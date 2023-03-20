@@ -2,18 +2,11 @@ package com.epam.learning.backendservices.rest.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "subscriptions")
 public class Subscription {
-    @Override
-    public String toString() {
-        return "Subscription{" +
-                "id=" + id +
-                ", user=" + user +
-                ", startDate=" + startDate +
-                '}';
-    }
 
     @Id
     @Column(name="subscriptionId")
@@ -57,5 +50,27 @@ public class Subscription {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", user=" + user +
+                ", startDate=" + startDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subscription that = (Subscription) o;
+        return id.equals(that.id) && user.equals(that.user) && startDate.equals(that.startDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, user, startDate);
     }
 }

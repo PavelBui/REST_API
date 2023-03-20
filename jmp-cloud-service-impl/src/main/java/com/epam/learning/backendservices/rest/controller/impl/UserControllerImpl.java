@@ -1,17 +1,13 @@
 package com.epam.learning.backendservices.rest.controller.impl;
 
 import com.epam.learning.backendservices.rest.controller.UserController;
-import com.epam.learning.backendservices.rest.converter.UserRequestDtoToUserConvertor;
-import com.epam.learning.backendservices.rest.converter.UserToUserResponseDtoConvertor;
 import com.epam.learning.backendservices.rest.dto.UserRequestDto;
 import com.epam.learning.backendservices.rest.dto.UserResponseDto;
 import com.epam.learning.backendservices.rest.exeption.UserNotFoundException;
 import com.epam.learning.backendservices.rest.model.User;
 import com.epam.learning.backendservices.rest.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,47 +19,39 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@Api(tags = "User Endpoint")
 public class UserControllerImpl implements UserController {
 
     @Autowired
     private UserService userService;
     @Autowired
-    private UserToUserResponseDtoConvertor userToUserResponseDtoConvertor;
+    private Converter<User, UserResponseDto> userToUserResponseDtoConverter;
     @Autowired
-    private UserRequestDtoToUserConvertor userRequestDtoToUserConvertor;
+    private Converter<UserRequestDto, User> userRequestDtoToUserConverter;
 
-    @ApiOperation("Create User")
     public EntityModel<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) {
-        User user = userService.createUser(userRequestDtoToUserConvertor.convert(userRequestDto));
-        return toModel(userToUserResponseDtoConvertor.convert(user));
+        User user = userService.createUser(userRequestDtoToUserConverter.convert(userRequestDto));
+        return toModel(userToUserResponseDtoConverter.convert(user));
     }
 
-    @ApiOperation("Update User")
     public EntityModel<UserResponseDto> updateUser(@RequestBody UserRequestDto userRequestDto) {
-        User user = userService.updateUser(userRequestDtoToUserConvertor.convert(userRequestDto));
-        return toModel(userToUserResponseDtoConvertor.convert(user));
+        User user = userService.updateUser(userRequestDtoToUserConverter.convert(userRequestDto));
+        return toModel(userToUserResponseDtoConverter.convert(user));
     }
 
-    @ApiOperation("Delete User by id")
-    @ApiImplicitParam(name = "id", value = "User id", paramType = "path", required = true)
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation("Get User by id")
-    @ApiImplicitParam(name = "id", value = "User id", paramType = "path", required = true)
     public EntityModel<UserResponseDto> getUser(@PathVariable Long id) {
         User user = userService.getUser(id).orElseThrow(() -> new UserNotFoundException(id));
-        return toModel(userToUserResponseDtoConvertor.convert(user));
+        return toModel(userToUserResponseDtoConverter.convert(user));
     }
 
-    @ApiOperation("Get list of all Users")
     public List<EntityModel<UserResponseDto>> getAllUser() {
         return userService.getAllUser()
                 .stream()
-                .map(user -> userToUserResponseDtoConvertor.convert(user))
+                .map(user -> userToUserResponseDtoConverter.convert(user))
                 .map(UserControllerImpl::toModel)
                 .collect(Collectors.toList());
     }

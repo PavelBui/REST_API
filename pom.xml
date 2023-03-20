@@ -14,7 +14,7 @@
     <groupId>com.epam.learning.backendservices.rest</groupId>
     <artifactId>REST_API</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <modules>
         <module>jmp-dto</module>
         <module>jmp-cloud-service-impl</module>
@@ -26,6 +26,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <revision>1.0-SNAPSHOT</revision>
     </properties>
 
     <dependencyManagement>
