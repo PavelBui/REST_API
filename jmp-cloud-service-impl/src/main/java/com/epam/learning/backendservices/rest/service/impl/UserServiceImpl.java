@@ -1,5 +1,6 @@
 package com.epam.learning.backendservices.rest.service.impl;
 
+import com.epam.learning.backendservices.rest.exeption.UserNotFoundException;
 import com.epam.learning.backendservices.rest.service.UserService;
 import com.epam.learning.backendservices.rest.repository.UserRepository;
 import com.epam.learning.backendservices.rest.model.User;
@@ -40,7 +41,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        userRepository.deleteById(user.getId());
     }
 
     @Override

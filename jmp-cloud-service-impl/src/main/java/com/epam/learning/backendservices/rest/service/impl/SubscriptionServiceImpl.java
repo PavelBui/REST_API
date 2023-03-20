@@ -1,5 +1,6 @@
 package com.epam.learning.backendservices.rest.service.impl;
 
+import com.epam.learning.backendservices.rest.exeption.SubscriptionNotFoundException;
 import com.epam.learning.backendservices.rest.service.SubscriptionService;
 import com.epam.learning.backendservices.rest.repository.SubscriptionRepository;
 import com.epam.learning.backendservices.rest.model.Subscription;
@@ -41,7 +42,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     public void deleteSubscription(Long id) {
-        subscriptionRepository.deleteById(id);
+        Subscription subscription = subscriptionRepository.findById(id)
+                .orElseThrow(() -> new SubscriptionNotFoundException(id));
+        subscriptionRepository.deleteById(subscription.getId());
     }
 
     @Override
